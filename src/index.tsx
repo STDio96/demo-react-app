@@ -10,7 +10,6 @@ import Login from './pages/Login';
 const router = createBrowserRouter([
   {
     path: '/',
-    index: true,
     element: <Home />,
   },
   {
@@ -27,7 +26,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const root = ReactDOM.createRoot(
+const root: ReactDOM.Root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
