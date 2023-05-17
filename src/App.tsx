@@ -1,3 +1,4 @@
+// TODO: remove
 import React from 'react';
 
 function App() {
