@@ -6,15 +6,16 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <ProtectedRoute component={Home} />,
   },
   {
     path: '/settings',
-    element: <Settings />,
+    element: <ProtectedRoute component={Settings} />,
   },
   {
     path: '/login',
