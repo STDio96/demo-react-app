@@ -16,10 +16,10 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ data }) => {
   const navigate = useNavigate();
-  const { title, body } = data;
+  const { id, title, body } = data;
 
   const handleRedirectToDetailPage = (): void => {
-    navigate('/detail');
+    navigate(`/detail/${id}`);
   };
 
   return (

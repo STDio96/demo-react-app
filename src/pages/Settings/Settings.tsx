@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext';
 import useAuthentication from '../../hooks/useAuthentication';
 
+import styles from './Settings.module.css';
+
 const Settings: React.FC = () => {
   const { isAuthenticated, userName, userId } = useContext(AuthContext);
   const { logout } = useAuthentication();
@@ -12,14 +14,17 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Settings page</h1>
+    <div className={styles.wrapper}>
       {isAuthenticated && (
         <>
           <div>
             Welcome: {userName} [{userId}]
           </div>
-          <button type="button" onClick={handleLogout}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </>

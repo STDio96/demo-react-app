@@ -30,23 +30,11 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: '/detail',
+        path: '/detail/:id',
         element: <Detail />,
       },
     ],
   },
-  /* {
-        path: '/settings',
-        element: <ProtectedRoute component={Settings} />,
-      },
-      {
-        path: '/login',
-        element: <Login />,
-      },
-      {
-        path: '/detail',
-        element: <Detail />,
-      }, */
 ]);
 
 const root: ReactDOM.Root = ReactDOM.createRoot(
