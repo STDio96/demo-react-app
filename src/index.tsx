@@ -7,13 +7,33 @@ import Settings from './pages/Settings';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
+import PostsList from "./components/PostsList";
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ProtectedRoute component={Home} />,
+    element: <Home />,
+    children: [
+      {
+        index: true,
+        path: '/',
+        element: <ProtectedRoute component={PostsList} />,
+      },
+      {
+        path: '/settings',
+        element: <ProtectedRoute component={Settings} />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/detail',
+        element: <Detail />,
+      },
+    ]
   },
-  {
+  /* {
     path: '/settings',
     element: <ProtectedRoute component={Settings} />,
   },
@@ -24,7 +44,7 @@ const router = createBrowserRouter([
   {
     path: '/detail',
     element: <Detail />,
-  },
+  }, */
 ]);
 
 const root: ReactDOM.Root = ReactDOM.createRoot(

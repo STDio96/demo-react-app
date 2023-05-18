@@ -77,10 +77,10 @@ const useAuthentication = (): AuthenticationHook => {
   };
 
   const logout = (): void => {
-    localStorage.removeItem(LOCALSTORAGE_AUTH_USERNAME_KEY);
-    localStorage.removeItem(LOCALSTORAGE_AUTH_USERID_KEY);
     setUsername(null);
     setUserId(-1);
+    localStorage.removeItem(LOCALSTORAGE_AUTH_USERNAME_KEY);
+    localStorage.removeItem(LOCALSTORAGE_AUTH_USERID_KEY);
     navigate('/login');
   };
 

@@ -1,8 +1,8 @@
 import type React from 'react';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import useAuthentication from '../../hooks/useAuthentication';
-import PostsList from '../../components/PostsList';
 
 import styles from './Home.module.css';
 
@@ -11,17 +11,38 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Home</h1>
-      {!username && <Link to="/login">Login</Link>}
-
+      <header className={styles.header}>
+        <h1>Kind of a Twitter App</h1>
+        {!username && <Link to="/login">Login</Link>}
+      </header>
+      <main className={styles.content}>
+        <Outlet />
+      </main>
       {!!username && (
-        <>
-          <PostsList />
-          <div className={styles.footer}>
-            <Link to="/">Home</Link>
-            <Link to="/settings">Settings</Link>
+        <footer className={styles.footer}>
+          <div className={styles.footerLinksWrapper}>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                classNames(styles.footerLink, {
+                  [styles.active]: isActive,
+                })
+              }
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/settings"
+              className={({ isActive }) =>
+                classNames(styles.footerLink, {
+                  [styles.active]: isActive,
+                })
+              }
+            >
+              Settings
+            </NavLink>
           </div>
-        </>
+        </footer>
       )}
     </div>
   );
