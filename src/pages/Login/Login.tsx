@@ -11,12 +11,19 @@ const Login: React.FC = () => {
 
   // if user logged in => redirect to main page
   if (username) {
-      navigate('/');
+    navigate('/');
   }
 
   const handleLogin = useCallback((): void => {
-    login(inputValue);
-  }, [inputValue]);
+    void login(inputValue);
+  }, [login, inputValue]);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleLogin();
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
@@ -25,7 +32,12 @@ const Login: React.FC = () => {
   return (
     <div>
       <h1>Login page</h1>
-      <input type="text" value={inputValue} onChange={handleInputChange} />
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
+      />
       <button type="button" onClick={handleLogin}>
         Login
       </button>

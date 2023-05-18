@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { POSTS_ENDPOINT_URL, POSTS_PER_PAGE } from '../constants';
+import { POSTS_PER_PAGE, USERS_POSTS_ENDPOINT_URL } from '../constants';
+import useAuthentication from './useAuthentication';
 
 interface Post {
   id: number;
@@ -14,32 +15,36 @@ interface PostsState {
   isError: boolean;
   hasMore: boolean;
   fetchPosts: () => Promise<any>;
-  posts: Post[] | null;
+  posts: Post[];
 }
 
 const usePosts = (): PostsState => {
-  const [posts, setPosts] = useState<Post[] | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const { userId } = useAuthentication();
 
-  const fetchPosts = async (): Promise<any> => {
+  const fetchPosts = useCallback(async (): Promise<any> => {
     setIsLoading(true);
     const skip: number = posts?.length ?? 0;
 
     try {
       const response = await fetch(
-        `${POSTS_ENDPOINT_URL}?limit=${POSTS_PER_PAGE}&skip=${skip}`
+        `${USERS_POSTS_ENDPOINT_URL.replace(
+          '%userId%',
+          String(userId)
+        )}?limit=${POSTS_PER_PAGE}&skip=${skip}`
       );
+
       if (response.ok) {
         const data = await response.json();
+
         if (data.posts.length < 10) {
           setHasMore(false);
-        } else {
-          setPosts((prevPosts) =>
-            prevPosts ? [...prevPosts, ...data.posts] : data.posts
-          );
         }
+
+        setPosts((prevPosts) => [...prevPosts, ...data.posts]);
       } else {
         setIsError(true);
         throw new Error('Error fetching posts');
@@ -50,16 +55,14 @@ const usePosts = (): PostsState => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [userId, posts?.length]);
 
   useEffect(() => {
-    let isCurrent = true;
-    console.log('__isCurrent', isCurrent);
-    fetchPosts();
-
-    return () => {
-      isCurrent = false;
-    };
+    console.log('__useEffect', userId);
+    if (userId !== -1) {
+      void fetchPosts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

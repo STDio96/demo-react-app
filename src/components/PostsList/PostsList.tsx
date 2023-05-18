@@ -14,8 +14,9 @@ const PostsList: React.FC = () => {
 
   useEffect(() => {
     if (inView && !isLoading) {
-      fetchPosts();
+      void fetchPosts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   if (isError) {
