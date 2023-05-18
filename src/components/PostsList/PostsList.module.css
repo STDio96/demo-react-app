@@ -6,3 +6,15 @@
 
   row-gap: 10px;
 }
+
+.loaderShow {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.loaderHide {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 1300ms, opacity 2500ms;
+}

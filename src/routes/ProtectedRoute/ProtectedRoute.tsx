@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <div>Loading...</div>;
   }
 
-  if (!!username) {
+  if (username) {
     return <Component {...rest} />;
   }
 
