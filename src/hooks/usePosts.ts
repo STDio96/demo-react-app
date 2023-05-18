@@ -21,14 +21,19 @@ const usePosts = (): PostsState => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    let isCurrent = true;
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
         const response = await fetch(POSTS_ENDPOINT_URL);
         if (response.ok) {
           const data = await response.json();
-          setPosts(data.posts);
-          setIsError(false);
+          if (isCurrent) {
+            setPosts((prevPosts) =>
+              prevPosts ? [...prevPosts, ...data.posts] : data.posts
+            );
+            setIsError(false);
+          }
         } else {
           setIsError(true);
           throw new Error('Error fetching posts');
@@ -37,11 +42,17 @@ const usePosts = (): PostsState => {
         setIsError(true);
         console.error(error);
       } finally {
-        setIsLoading(false);
+        if (isCurrent) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchPosts();
+
+    return () => {
+      isCurrent = false;
+    };
   }, []);
 
   return {
