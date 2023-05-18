@@ -1,16 +1,17 @@
 import type React from 'react';
-import {useCallback, useContext, useState} from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAuthentication from '../../hooks/useAuthentication';
-import {AuthContext} from "../../AuthContext";
+import { AuthContext } from '../../AuthContext';
+
+import styles from './Login.module.css';
 
 const Login: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const { login } = useAuthentication();
   const { isAuthenticated } = useContext(AuthContext);
-
 
   // if user logged in => redirect to main page
   if (isAuthenticated) {
@@ -21,7 +22,9 @@ const Login: React.FC = () => {
     void login(inputValue);
   }, [login, inputValue]);
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleLogin();
@@ -36,12 +39,13 @@ const Login: React.FC = () => {
     <div>
       <h1>Login page</h1>
       <input
+        className={styles.input}
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
       />
-      <button type="button" onClick={handleLogin}>
+      <button className={styles.button} type="button" onClick={handleLogin}>
         Login
       </button>
     </div>

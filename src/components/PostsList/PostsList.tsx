@@ -23,13 +23,11 @@ const PostsList: React.FC = () => {
     return <div>Something went wrong loading posts!</div>;
   }
 
-  console.log('__posts', isLoading);
-
   return (
     <div className={styles.wrapper}>
-      {posts?.map((data) => (
-        <PostCard data={data} />
-      ))}
+      {!isLoading && posts.length === 0
+        ? 'No posts found for this user!'
+        : posts?.map((data) => <PostCard data={data} />)}
       <div
         ref={!isLoading && hasMore ? ref : null}
         className={classNames({
