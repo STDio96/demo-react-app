@@ -1,16 +1,12 @@
 import type React from 'react';
 
-import PostCard from "../PostCard";
+import PostCard from '../PostCard';
 import usePosts from '../../hooks/usePosts';
 
 import styles from './PostsList.module.css';
 
 const PostsList: React.FC = () => {
-  const { isLoading, isError, posts } = usePosts();
-
-  if (isLoading) {
-    return <div>Loading posts...</div>;
-  }
+  const { isLoading, isError, posts, hasMore, fetchPosts } = usePosts();
 
   if (isError) {
     return <div>Something went wrong loading posts!</div>;
@@ -23,6 +19,17 @@ const PostsList: React.FC = () => {
       {posts?.map((data) => (
         <PostCard data={data} />
       ))}
+      {isLoading && <p>Loading posts...</p>}
+      {!isLoading && hasMore && (
+        <button
+          type="button"
+          onClick={() => {
+            fetchPosts();
+          }}
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 };
