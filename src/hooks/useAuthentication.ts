@@ -1,31 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '../AuthContext';
 import {
   LOCALSTORAGE_AUTH_USERID_KEY,
   LOCALSTORAGE_AUTH_USERNAME_KEY,
   USERS_LIST_ENDPOINT_URL,
 } from '../constants';
 
-interface AuthenticationState {
-  username: string | null;
-  userId: number;
-  isInitialCheckComplete: boolean;
-}
-
 interface AuthenticationActions {
   login: (username: string) => Promise<any>;
   logout: () => void;
 }
 
-type AuthenticationHook = AuthenticationState & AuthenticationActions;
+type AuthenticationHook = AuthenticationActions;
 
 const useAuthentication = (): AuthenticationHook => {
-  const navigate = useNavigate();
+  const { contextLogin, contextLogout } = useContext(AuthContext);
 
-  const [username, setUsername] = useState<string | null>(null);
-  const [userId, setUserId] = useState(-1);
-  const [isInitialCheckComplete, setIsInitialCheckComplete] = useState(false);
+  const navigate = useNavigate();
 
   const checkUserExistence = async (
     usernameToCheck: string
@@ -50,10 +43,10 @@ const useAuthentication = (): AuthenticationHook => {
     const userName = localStorage.getItem(LOCALSTORAGE_AUTH_USERNAME_KEY);
     const signedUserId =
       localStorage.getItem(LOCALSTORAGE_AUTH_USERID_KEY) ?? -1;
-    setUsername(userName);
-    setUserId(signedUserId as number);
-    setIsInitialCheckComplete(true);
-  }, []);
+    if (userName?.length) {
+      contextLogin({ username: userName, userid: signedUserId as number });
+    }
+  }, [contextLogin]);
 
   const login = async (loggedUserName: string): Promise<any> => {
     if (loggedUserName.length < 3) {
@@ -62,13 +55,7 @@ const useAuthentication = (): AuthenticationHook => {
       const loggedUserId = await checkUserExistence(loggedUserName);
 
       if (loggedUserId > 0) {
-        localStorage.setItem(LOCALSTORAGE_AUTH_USERNAME_KEY, loggedUserName);
-        localStorage.setItem(
-          LOCALSTORAGE_AUTH_USERID_KEY,
-          loggedUserId.toString()
-        );
-        setUsername(loggedUserName);
-        setUserId(loggedUserId);
+        contextLogin({ userid: loggedUserId, username: loggedUserName });
         navigate('/');
       } else {
         alert(`User ${loggedUserName} not found!`);
@@ -77,19 +64,13 @@ const useAuthentication = (): AuthenticationHook => {
   };
 
   const logout = (): void => {
-    setUsername(null);
-    setUserId(-1);
-    localStorage.removeItem(LOCALSTORAGE_AUTH_USERNAME_KEY);
-    localStorage.removeItem(LOCALSTORAGE_AUTH_USERID_KEY);
+    contextLogout();
     navigate('/login');
   };
 
   return {
-    username,
-    userId,
     login,
     logout,
-    isInitialCheckComplete,
   };
 };
 

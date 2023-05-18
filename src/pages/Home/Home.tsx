@@ -1,24 +1,23 @@
 import type React from 'react';
+import { useContext } from 'react';
 import classNames from 'classnames';
-import { Link, NavLink, Outlet } from 'react-router-dom';
-
-import useAuthentication from '../../hooks/useAuthentication';
+import { NavLink, Outlet } from 'react-router-dom';
 
 import styles from './Home.module.css';
+import { AuthContext } from '../../AuthContext';
 
 const Home: React.FC = () => {
-  const { username } = useAuthentication();
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <h1>Kind of a Twitter App</h1>
-        {!username && <Link to="/login">Login</Link>}
       </header>
       <main className={styles.content}>
         <Outlet />
       </main>
-      {!!username && (
+      {isAuthenticated && (
         <footer className={styles.footer}>
           <div className={styles.footerLinksWrapper}>
             <NavLink

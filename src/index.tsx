@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { AuthProvider } from './AuthContext';
+
 import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
-import PostsList from "./components/PostsList";
+import PostsList from './components/PostsList';
 
 const router = createBrowserRouter([
   {
@@ -31,20 +33,20 @@ const router = createBrowserRouter([
         path: '/detail',
         element: <Detail />,
       },
-    ]
+    ],
   },
   /* {
-    path: '/settings',
-    element: <ProtectedRoute component={Settings} />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/detail',
-    element: <Detail />,
-  }, */
+        path: '/settings',
+        element: <ProtectedRoute component={Settings} />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/detail',
+        element: <Detail />,
+      }, */
 ]);
 
 const root: ReactDOM.Root = ReactDOM.createRoot(
@@ -53,6 +55,8 @@ const root: ReactDOM.Root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

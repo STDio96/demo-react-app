@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import { POSTS_PER_PAGE, USERS_POSTS_ENDPOINT_URL } from '../constants';
-import useAuthentication from './useAuthentication';
+import { AuthContext } from '../AuthContext';
 
 interface Post {
   id: number;
@@ -23,7 +23,7 @@ const usePosts = (): PostsState => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const { userId } = useAuthentication();
+  const { userId } = useContext(AuthContext);
 
   const fetchPosts = useCallback(async (): Promise<any> => {
     setIsLoading(true);
@@ -56,14 +56,6 @@ const usePosts = (): PostsState => {
       setIsLoading(false);
     }
   }, [userId, posts?.length]);
-
-  useEffect(() => {
-    console.log('__useEffect', userId);
-    if (userId !== -1) {
-      void fetchPosts();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return {
     isLoading,

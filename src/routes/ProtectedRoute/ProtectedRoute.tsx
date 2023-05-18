@@ -1,8 +1,9 @@
 import type React from 'react';
+import { useContext } from 'react';
 import type { RouteProps } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 
-import useAuthentication from "../../hooks/useAuthentication";
+import { AuthContext } from '../../AuthContext';
 
 type ProtectedRouteProps = RouteProps & {
   component: React.ComponentType<any>;
@@ -12,13 +13,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { username, isInitialCheckComplete } = useAuthentication();
+  const { isAuthenticated } = useContext(AuthContext);
 
-  if (!isInitialCheckComplete) {
-    return <div>Loading...</div>;
-  }
-
-  if (username) {
+  if (isAuthenticated) {
     return <Component {...rest} />;
   }
 

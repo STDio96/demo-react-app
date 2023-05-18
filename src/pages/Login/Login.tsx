@@ -1,16 +1,19 @@
 import type React from 'react';
-import { useCallback, useState } from 'react';
+import {useCallback, useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAuthentication from '../../hooks/useAuthentication';
+import {AuthContext} from "../../AuthContext";
 
 const Login: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { username, login } = useAuthentication();
+  const { login } = useAuthentication();
+  const { isAuthenticated } = useContext(AuthContext);
+
 
   // if user logged in => redirect to main page
-  if (username) {
+  if (isAuthenticated) {
     navigate('/');
   }
 
