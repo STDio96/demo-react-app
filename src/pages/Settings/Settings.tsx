@@ -1,20 +1,23 @@
 import type React from 'react';
 
+import useAuthentication from '../../hooks/useAuthentication';
+
 const Settings: React.FC = () => {
-  const isUserLoggedIn = true;
+  const { username, logout } = useAuthentication();
+  const handleLogout = (): void => {
+    logout();
+  };
 
   return (
     <div>
       <h1>Settings page</h1>
-      {isUserLoggedIn && (
-        <button
-          type="button"
-          onClick={() => {
-            console.log('__logout');
-          }}
-        >
-          Logout
-        </button>
+      {username && (
+        <>
+          <div>Welcome: {username}</div>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </>
       )}
     </div>
   );

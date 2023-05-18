@@ -1,22 +1,27 @@
 import type React from 'react';
 import { Link } from 'react-router-dom';
 
+import useAuthentication from '../../hooks/useAuthentication';
+import PostsList from '../../components/PostsList';
+
+import styles from './Home.module.css';
+
 const Home: React.FC = () => {
-  const isUserLoggedIn = true;
+  const { username } = useAuthentication();
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h1>Home</h1>
-      <Link to="/login">Login</Link>
-      <Link to="/detail">Detail</Link>
+      {!username && <Link to="/login">Login</Link>}
 
-      {isUserLoggedIn && (
-        <div className="bottomMenu">
-          <h3>Visible after login</h3>
-
-          <Link to="/">Home</Link>
-          <Link to="/settings">Settings</Link>
-        </div>
+      {!!username && (
+        <>
+          <PostsList />
+          <div className={styles.footer}>
+            <Link to="/">Home</Link>
+            <Link to="/settings">Settings</Link>
+          </div>
+        </>
       )}
     </div>
   );
