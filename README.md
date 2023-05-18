@@ -1,3 +1,14 @@
+Data is loading from the following URL endpoints:
+* https://dummyjson.com/posts'
+* https://dummyjson.com/users/%userId%/posts
+* https://dummyjson.com/users/search
+* https://dummyjson.com/posts/
+
+Available nicknames for login:
+* John
+* Terry
+* White (doesn't have any posts)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
