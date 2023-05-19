@@ -2,6 +2,8 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { POST_DETAILS_ENDPOINT_URL } from '../../constants';
 
+import Loader from '../Loader';
+
 import styles from './DetailedPostCard.module.css';
 
 interface PostData {
@@ -67,21 +69,26 @@ const DetailedPostCard: React.FC<{ id: string | undefined }> = ({ id }) => {
   return (
     <div className={styles.post}>
       {isLoading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
-        <>
-          <h2 className={styles.postTitle}>{title}</h2>
-          <p className={styles.postBody}>{body}</p>
-          <div className={styles.postTags}>
-            <strong>Tags:</strong>{' '}
-            {tags.map((tag) => (
-              <span>{tag}</span>
-            ))}
+        <div className={styles.wrapper}>
+          <div className={styles.cardHeader}>
+            <h2>{title}</h2>
           </div>
-          <div className={styles.postReactions}>
-            <strong>Reactions:</strong> {reactions}
+          <div className={styles.cardBody}>
+            <p>{body}</p>
+            <div className={styles.tags}>
+              {tags.map((tag) => (
+                <span key={tag} className={styles.tag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-        </>
+          <div className={styles.cardFooter}>
+            <div className={styles.reactions}>{reactions} reactions</div>
+          </div>
+        </div>
       )}
     </div>
   );

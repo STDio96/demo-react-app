@@ -1,44 +1,55 @@
 .post {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.postTitle {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
+.cardHeader {
+  background-color: #2196f3;
+  padding: 10px;
+  color: #fff;
 }
 
-.post-body {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 10px;
+.cardBody {
+  padding: 10px;
 }
 
-.postTags {
-  margin-bottom: 10px;
+.cardBody p {
+  margin: 0;
 }
 
-.postTags strong {
-  color: #888;
+.tags {
+  margin-top: 10px;
 }
 
-.postTags span {
-  background-color: #ddd;
-  color: #333;
-  border-radius: 3px;
-  padding: 2px 6px;
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: #fff;
+  border-radius: 4px;
   margin-right: 5px;
 }
 
-.postReactions {
-  font-weight: bold;
-  color: #777;
+.cardFooter {
+  background-color: #f5f5f5;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+  font-size: 14px;
 }
 
-.postReactions strong {
-  color: #999;
+.reactions {
+  display: flex;
+  align-items: center;
+}
+
+.reactions:before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  background-color: #ff9800;
 }

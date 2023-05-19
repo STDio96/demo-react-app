@@ -29,8 +29,12 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
       onKeyUp={handleRedirectToDetailPage}
       role="presentation"
     >
-      <div className={styles.title}>{title}</div>
-      <div className={styles.body}>{body}</div>
+      <div className={styles.cardHeader}>
+        <h2>{title}</h2>
+      </div>
+      <div className={styles.cardBody}>
+        {body}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../AuthContext';
@@ -8,15 +8,19 @@ import {
   USERS_LIST_ENDPOINT_URL,
 } from '../constants';
 
+interface AuthenticationState {
+  isLoading: boolean;
+}
 interface AuthenticationActions {
   login: (username: string) => Promise<any>;
   logout: () => void;
 }
 
-type AuthenticationHook = AuthenticationActions;
+type AuthenticationHook = AuthenticationState & AuthenticationActions;
 
 const useAuthentication = (): AuthenticationHook => {
   const { contextLogin, contextLogout } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,6 +28,7 @@ const useAuthentication = (): AuthenticationHook => {
     usernameToCheck: string
   ): Promise<number> => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `${USERS_LIST_ENDPOINT_URL}?q=${usernameToCheck}`
       );
@@ -34,6 +39,8 @@ const useAuthentication = (): AuthenticationHook => {
     } catch (error) {
       console.error(error);
       return -1;
+    } finally {
+      setIsLoading(false);
     }
 
     return -1;
@@ -69,6 +76,7 @@ const useAuthentication = (): AuthenticationHook => {
   };
 
   return {
+    isLoading,
     login,
     logout,
   };

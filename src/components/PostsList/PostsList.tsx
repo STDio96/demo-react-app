@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 
 import usePosts from '../../hooks/usePosts';
 import PostCard from '../PostCard';
+import Loader from '../Loader';
 
 import styles from './PostsList.module.css';
 
@@ -35,7 +36,7 @@ const PostsList: React.FC = () => {
           [styles.loaderHide]: !isLoading,
         })}
       >
-        Loading posts...
+        <Loader />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import styles from './Login.module.css';
 const Login: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuthentication();
+  const { login, isLoading } = useAuthentication();
   const { isAuthenticated } = useContext(AuthContext);
 
   // if user logged in => redirect to main page
@@ -36,18 +36,25 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Login page</h1>
-      <input
-        className={styles.input}
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyPress}
-      />
-      <button className={styles.button} type="button" onClick={handleLogin}>
-        Login
-      </button>
+    <div className={styles.wrapper}>
+      <div className={styles.title}>Login page</div>
+      <div>
+        <input
+          className={styles.input}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+        />
+        <button
+          className={styles.button}
+          type="button"
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Logging in' : 'Login'}
+        </button>
+      </div>
     </div>
   );
 };
