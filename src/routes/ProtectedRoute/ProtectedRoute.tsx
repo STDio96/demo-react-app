@@ -13,7 +13,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, isDone } = useContext(AuthContext);
+
+  if (!isDone) {
+    return null;
+  }
 
   if (isAuthenticated) {
     return <Component {...rest} />;
