@@ -3,20 +3,26 @@ import { useQuery } from '@tanstack/react-query';
 import { PostService } from '../services/post.service';
 import type { IPost } from '../services/post.service';
 
-export interface IHookReturn {
-  data?: IPost[];
+/* interface IResponse {
+  posts: IPost[];
+  skip: number;
+  total: number;
+} */
+
+interface IHookReturn {
+  data?: IPost;
   isLoading: boolean;
   isError: boolean;
 }
 
-const usePosts = (): IHookReturn => {
+const usePostById = (id: string): IHookReturn => {
   const { data, isError, isLoading } = useQuery(
-    ['posts'],
-    async () => await PostService.getAll(),
+    ['posts', id],
+    async () => await PostService.getById(id),
     {
-      keepPreviousData: true,
+      enabled: !!id,
       retry: 2,
-      select: ({ posts }) => posts,
+      select: ({ data: response }) => response,
     }
   );
 
@@ -27,4 +33,4 @@ const usePosts = (): IHookReturn => {
   };
 };
 
-export default usePosts;
+export default usePostById;
