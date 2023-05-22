@@ -42,18 +42,21 @@ body {
 }
 
 .footer {
-  background-color: #f44336;
+  background-color: #2196f3;
   padding: 20px;
   color: #fff;
   text-align: center;
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
   box-sizing: border-box;
 }
 
 .footerButton {
   margin-right: 10px;
   padding: 10px;
-  background-color: #ff9800;
+  background-color: #0567b5;
   text-decoration: none;
   color: #fff;
   border: none;
