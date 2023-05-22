@@ -2,16 +2,16 @@ import type React from 'react';
 import { useCallback, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useAuthentication from '../../hooks/useAuthentication';
 import { AuthContext } from '../../AuthContext';
+import useUsernameCheck from '../../hooks/useUserCheckName';
 
 import styles from './Login.module.css';
 
 const Login: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
-  const { login, isLoading } = useAuthentication();
   const { isAuthenticated } = useContext(AuthContext);
+  const { isInitialLoading, login } = useUsernameCheck();
 
   // if user logged in => redirect to main page
   if (isAuthenticated) {
@@ -19,13 +19,13 @@ const Login: React.FC = () => {
   }
 
   const handleLogin = useCallback((): void => {
-    void login(inputValue);
+    login(inputValue);
   }, [login, inputValue]);
 
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !isInitialLoading) {
       event.preventDefault();
       handleLogin();
     }
@@ -49,10 +49,12 @@ const Login: React.FC = () => {
         <button
           className={styles.button}
           type="button"
-          onClick={handleLogin}
-          disabled={isLoading}
+          onClick={() => {
+            handleLogin();
+          }}
+          disabled={isInitialLoading}
         >
-          {isLoading ? 'Logging in' : 'Login'}
+          {isInitialLoading ? 'Logging in' : 'Login'}
         </button>
       </div>
     </div>

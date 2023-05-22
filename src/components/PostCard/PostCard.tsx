@@ -30,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
       role="presentation"
     >
       <div className={styles.cardHeader}>
-        <h2>{title}</h2>
+        <h2>{id}. {title}</h2>
       </div>
       <div className={styles.cardBody}>
         {body}

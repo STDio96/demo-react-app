@@ -1,11 +1,11 @@
 import type React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import DetailedPostCard from '../../components/DetailedPostCard/DetailedPostCard';
+
+import DetailedPostCard from '../../components/DetailedPostCard';
 
 const Detail: React.FC = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const { id: postId } = params;
+  const { id: postId } = useParams<{ id: string }>();
 
   if (!postId) {
     navigate('/');
@@ -32,7 +32,7 @@ const Detail: React.FC = () => {
       >
         &larr; Back
       </button>
-      <DetailedPostCard id={postId} />
+      <DetailedPostCard id={postId as string} />
     </div>
   );
 };
