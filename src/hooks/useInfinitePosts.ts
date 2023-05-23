@@ -26,7 +26,7 @@ const useInfinitePosts = (userId: string): any => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ['posts', 'infinite'],
+    ['posts', 'infinite', userId],
     async ({ pageParam = 0 }): Promise<Response> =>
       await PostService.getInfiniteByCurrentUser(userId, pageParam),
     {
