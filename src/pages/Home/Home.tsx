@@ -34,6 +34,16 @@ const Home: React.FC = () => {
             Home
           </NavLink>
           <NavLink
+            to="/all-posts"
+            className={({ isActive }) =>
+              classNames(styles.footerButton, {
+                [styles.active]: isActive,
+              })
+            }
+          >
+            All Posts
+          </NavLink>
+          <NavLink
             to="/settings"
             className={({ isActive }) =>
               classNames(styles.footerButton, {

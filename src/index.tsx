@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
+import AllUsersPosts from './pages/AllUsersPosts';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PostsList from './components/PostsList';
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: '/detail/:id',
         element: <Detail />,
       },
+      {
+        path: '/all-posts',
+        element: <ProtectedRoute component={AllUsersPosts} />,
+      },
     ],
   },
 ]);
@@ -46,9 +51,9 @@ const root: ReactDOM.Root = ReactDOM.createRoot(
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
-    }
-  }
+      refetchOnWindowFocus: false,
+    },
+  },
 });
 
 root.render(
