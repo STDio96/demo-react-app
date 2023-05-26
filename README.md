@@ -10,6 +10,11 @@ How to run:
   * Terry
   * White (doesn't have any posts)
 
+Since the dummyjson server's users don't have a lot of posts to show how infinite scroll logic works,
+I've created a page with all the posts (not related to a user) that shows this logic. You have to be authorized to view this page:
+[http://localhost:3000/all-posts](http://localhost:3000/all-posts)
+
+
 
 Data is loading from the following URL endpoints:
 * https://dummyjson.com/posts
