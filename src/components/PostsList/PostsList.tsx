@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useInView } from 'react-intersection-observer';
 
 import { AuthContext } from '../../AuthContext';
-import useInfinitePosts from '../../hooks/useInfinitePosts';
+import useInfinitePostsByUser from '../../hooks/useInfinitePostsByUser';
 
 import PostCard from '../PostCard';
 import Loader from '../Loader';
@@ -20,7 +20,7 @@ const PostsList: React.FC = () => {
     data,
     isFetchingNextPage,
     hasNextPage,
-  } = useInfinitePosts(userId);
+  } = useInfinitePostsByUser(userId);
 
   const { ref, inView } = useInView({ threshold: 1 });
 
